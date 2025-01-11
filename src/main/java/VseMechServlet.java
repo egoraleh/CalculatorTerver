@@ -43,11 +43,17 @@ public class VseMechServlet extends HttpServlet {
         BigInteger nod = chislitel.gcd(znamenatel);
         chislitel = chislitel.divide(nod);
         znamenatel = znamenatel.divide(nod);
-        String ans = "";
-        ans += chislitel.toString();
-        ans += "/";
-        ans += znamenatel.toString();
-        req.setAttribute("answer", ans);
-        doGet(req, resp);
+        if (!chislitel.equals(BigInteger.ZERO)) {
+            String ans = "";
+            ans += chislitel.toString();
+            ans += "/";
+            ans += znamenatel.toString();
+            req.setAttribute("answer", ans);
+            doGet(req, resp);
+        } else {
+            int ans = 0;
+            req.setAttribute("answer", ans);
+            doGet(req, resp);
+        }
     }
 }

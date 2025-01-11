@@ -34,7 +34,7 @@ public class NeVseMechServlet extends HttpServlet {
         int k = Integer.parseInt(req.getParameter("k"));
         int m = Integer.parseInt(req.getParameter("m"));
         int r = Integer.parseInt(req.getParameter("r"));
-        if (m > n || r > k || r > m || r < 1) {
+        if (m > n || r > k || r > m || k < 0 || m < 1 || r < 0) {
             req.setAttribute("incorrect", "1");
             doGet(req, resp);
             return;
@@ -46,11 +46,17 @@ public class NeVseMechServlet extends HttpServlet {
         BigInteger nod = chislitel.gcd(znamenatel);
         chislitel = chislitel.divide(nod);
         znamenatel = znamenatel.divide(nod);
-        String ans = "";
-        ans += chislitel.toString();
-        ans += "/";
-        ans += znamenatel.toString();
-        req.setAttribute("answer", ans);
-        doGet(req, resp);
+        if (!chislitel.equals(BigInteger.ZERO)) {
+            String ans = "";
+            ans += chislitel.toString();
+            ans += "/";
+            ans += znamenatel.toString();
+            req.setAttribute("answer", ans);
+            doGet(req, resp);
+        } else {
+            int ans = 0;
+            req.setAttribute("answer", ans);
+            doGet(req, resp);
+        }
     }
 }
