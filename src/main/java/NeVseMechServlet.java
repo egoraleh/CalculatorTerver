@@ -46,15 +46,19 @@ public class NeVseMechServlet extends HttpServlet {
         BigInteger nod = chislitel.gcd(znamenatel);
         chislitel = chislitel.divide(nod);
         znamenatel = znamenatel.divide(nod);
-        if (!chislitel.equals(BigInteger.ZERO)) {
+        if (chislitel.equals(BigInteger.ZERO)) {
+            int ans = 0;
+            req.setAttribute("answer", ans);
+            doGet(req, resp);
+        } else if (chislitel.equals(znamenatel)) {
+             int ans = 1;
+             req.setAttribute("answer", ans);
+             doGet(req, resp);
+        } else {
             String ans = "";
             ans += chislitel.toString();
             ans += "/";
             ans += znamenatel.toString();
-            req.setAttribute("answer", ans);
-            doGet(req, resp);
-        } else {
-            int ans = 0;
             req.setAttribute("answer", ans);
             doGet(req, resp);
         }
